@@ -553,7 +553,7 @@ def search(request):
         insts = FaceInstance.objects.all().order_by('frame__video__id', 'frame__number').values('id', 'frame__id', 'frame__video__id', 'frame__video__path', 'bbox', 'labeler__name')
         videos = defaultdict(lambda: defaultdict(list))
         video_keys = Set()
-        for inst in insts[:100]:
+        for inst in insts:
             videos[inst['frame__video__path']][inst['frame__id']].append(inst)
             #'bbox': inst['bbox'], inst['labeler__name'], inst['frame__video__id']))
             video_keys.add(inst['frame__video__id'])
@@ -710,6 +710,7 @@ def search(request):
             if filtered:
                 filtered_insts.append(inst)
         insts = filtered_insts
+
 
         # TODO: order by
         if len(orderby)>0:

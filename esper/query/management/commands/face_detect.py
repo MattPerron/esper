@@ -64,13 +64,11 @@ class Command(BaseCommand):
 
                         f = FaceInstance()
                         f.frame = frame
-                        normalized_bbox = db.protobufs.BoundingBox()
-                        normalized_bbox.CopyFrom(bbox)
-                        normalized_bbox.x1 /= video.width
-                        normalized_bbox.x2 /= video.width
-                        normalized_bbox.y1 /= video.height
-                        normalized_bbox.y2 /= video.height
-                        f.bbox = normalized_bbox
+                        f.score = bbox.score
+                        f.x1 = bbox.x1 / video.width
+                        f.x2 = bbox.x2 / video.width
+                        f.y1 = bbox.y1 / video.width
+                        f.y2 = bbox.y2 / video.width
                         f.labeler = labeler
                         f.save()
 
