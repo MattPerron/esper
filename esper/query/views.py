@@ -714,7 +714,7 @@ def search(request):
 
         for val in orderby:
             if val not in values:
-                values.append(val)
+                values.append(val.strip('-'))
         annotate_vals_map = {}
 
         filteredby = queryset.objects.annotate()
@@ -779,7 +779,8 @@ def search(request):
                 if inst['id'] in frameset:
                     continue
                 frameset.add(inst['id'])
-                clips[inst[orderby[0]] if len(orderby)> 0 and type(inst[orderby[0]]) in [str, unicode] else ''].append({
+                first_ob_key = orderby[0].strip('-')
+                clips[inst[first_ob_key] if len(orderby)> 0 and type(inst[first_ob_key]) in [str, unicode] else ''].append({
                     'frame': inst['id'],
                     'video_id': inst['video__id'],
                     'bboxes': bboxes[inst['id']],
